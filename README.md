@@ -44,7 +44,3 @@ We welcome contributors!
 Please follow the [CONTRIBUTING.md](./CONTRIBUTING.md) guide to get started with feature development or bug fixes.
 
 ---
-
-## 📄 License
-
-This project is licensed under [MIT License](LICENSE).
