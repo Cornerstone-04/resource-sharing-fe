@@ -45,6 +45,16 @@ Please follow the [CONTRIBUTING.md](./CONTRIBUTING.md) guide to get started with
 
 ---
 
+## 🔗 Tech Stack Reference Links
+
+- [TailwindCSS – utility-first styling](https://tailwindcss.com/)
+- [ShadCN – accessible UI components](https://ui.shadcn.com/)
+- [Axios – HTTP requests](https://axios-http.com/docs/intro)
+- [Zustand – global state management](https://zustand.docs.pmnd.rs/getting-started/introduction)
+- [React Query – server-state management](https://tanstack.com/query/latest/docs/framework/react/overview)
+
+---
+
 ## 📄 License
 
 This project is licensed under [MIT License](LICENSE).
