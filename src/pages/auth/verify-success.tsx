@@ -13,7 +13,7 @@ export default function VerifySuccessPage() {
       />
       <h1 className="text-2xl font-bold">Verification Successful</h1>
       <Button
-        className="w-full bg-kw-primary"
+        className="w-full bg-kw-primary!"
         onClick={() => navigate("/dashboard")}
       >
         Go to Dashboard
