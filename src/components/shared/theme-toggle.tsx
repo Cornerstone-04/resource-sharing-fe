@@ -1,15 +1,12 @@
 import { useTheme } from "@/hooks";
 import { LucideMoon, LucideSun } from "lucide-react";
+import { Button } from "../ui/button";
 
 export const ThemeToggle = () => {
   const { dark, toggle } = useTheme();
   return (
-    <button
-      onClick={toggle}
-      aria-label="Toggle theme"
-      className="text-le-primary dark:text-white hover:scale-110 !w-fit"
-    >
+    <Button variant="ghost" onClick={toggle}>
       {dark ? <LucideSun /> : <LucideMoon />}
-    </button>
+    </Button>
   );
 };
