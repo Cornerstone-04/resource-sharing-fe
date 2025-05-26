@@ -5,10 +5,12 @@ import ErrorPage from "@/pages/error/error-page";
 import NotFoundPage from "@/pages/error/not-found";
 import LoginPage from "@/pages/auth/login";
 import AuthLayout from "@/layouts/auth-layout";
-import AppLayout from "@/layouts/app-layout";
+// import AppLayout from "@/layouts/app-layout";
 import VerifyDocsPage from "@/pages/auth/verify-docs";
 import VerifySuccessPage from "@/pages/auth/verify-success";
 import VerifyEmailPage from "@/pages/auth/verify-email";
+import DashboardLayout from "@/layouts/dashboard-layout";
+import DashboardHome from "@/pages/dasboard";
 
 export const router = createBrowserRouter([
   {
@@ -30,10 +32,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <AppLayout />, // authenticated layout
+    element: <DashboardLayout />, // authenticated layout
     errorElement: <ErrorPage />,
     children: [
-      // Add nested dashboard routes later
+      { index: true, element: <DashboardHome /> },
+      // { path: "resources", element: <ResourcesPage /> },
+      // { path: "my-materials", element: <MyMaterialsPage /> },
     ],
   },
   {
