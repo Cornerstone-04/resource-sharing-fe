@@ -8,6 +8,8 @@ import ResourceCard from "@/components/dashboard/resource-card";
 import ResourceDetail from "@/components/dashboard/resource-detail";
 import ResourceDetailsContainer from "@/components/dashboard/resource-details-container";
 import type { ResourceType } from "@/types";
+import { FaPlus } from "react-icons/fa6";
+import { useAppNavigate } from "@/hooks/navigation";
 
 const departments = ["CSC", "TCS", "MAC", "IFT", "IS"];
 const levels = ["100", "200", "300", "400"];
@@ -17,6 +19,7 @@ const types = ["Softcopy", "Hardcover"];
 const PAGE_SIZE = 8;
 
 export default function ResourcesPage() {
+  const { goToUploadResource } = useAppNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedResource, setSelectedResource] = useState<ResourceType | null>(
     null
@@ -94,7 +97,12 @@ export default function ResourcesPage() {
           <Filter className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
         </div>
 
-        <Button className="whitespace-nowrap">Upload Resource</Button>
+        <Button
+          className="whitespace-nowrap bg-kw-primary text-white"
+          onClick={goToUploadResource}
+        >
+          <FaPlus /> Upload Resource
+        </Button>
       </div>
 
       {/* Filters */}
@@ -144,6 +152,31 @@ export default function ResourcesPage() {
         </select>
       </div>
 
+      {/* Pagination */}
+      <div className="flex justify-start items-center gap-4 mt-6">
+        <Button
+          size="sm"
+          variant="outline"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((p) => p - 1)}
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+
+        <span className="text-sm">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <Button
+          size="sm"
+          variant="outline"
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((p) => p + 1)}
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      </div>
+
       {/* Resource Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {paginated.map((resource) => (
@@ -169,31 +202,6 @@ export default function ResourcesPage() {
             }}
           />
         ))}
-      </div>
-
-      {/* Pagination */}
-      <div className="flex justify-center items-center gap-4 mt-6">
-        <Button
-          size="sm"
-          variant="outline"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((p) => p - 1)}
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-
-        <span className="text-sm">
-          Page {currentPage} of {totalPages}
-        </span>
-
-        <Button
-          size="sm"
-          variant="outline"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((p) => p + 1)}
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Button>
       </div>
     </div>
   );

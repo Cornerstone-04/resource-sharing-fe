@@ -1,14 +1,9 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import RequestToBorrowButton from "../shared/request-button";
+import type { ResourceType } from "@/types";
 
 type ResourceCardProps = {
-  resource: {
-    id: number;
-    courseCode: string;
-    title: string;
-    image: string;
-    available: boolean;
-  };
+  resource: ResourceType;
   onClick?: () => void;
 };
 
@@ -42,7 +37,7 @@ export default function ResourceCard({ resource, onClick }: ResourceCardProps) {
           View Details
         </Badge>
 
-        <Button className="w-full bg-kw-primary text-white">Request</Button>
+        <RequestToBorrowButton resource={resource} />
       </div>
     </div>
   );

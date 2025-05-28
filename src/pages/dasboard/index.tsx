@@ -20,12 +20,20 @@ import ResourceDetail from "@/components/dashboard/resource-detail";
 import ResourceDetailsContainer from "@/components/dashboard/resource-details-container";
 import type { ResourceType } from "@/types";
 import { FaPlus } from "react-icons/fa6";
+import { useAppNavigate } from "@/hooks/navigation";
+import { useUserData } from "@/hooks/useUserData";
 
 export default function DashboardHome() {
+  const { goToUploadResource, goToResources } = useAppNavigate();
   const [selectedResource, setSelectedResource] = useState<ResourceType | null>(
     null
   );
   const [searchQuery, setSearchQuery] = useState("");
+ const { data, error, isLoading } = useUserData();
+
+if (isLoading) return <p>Loading user data...</p>;
+if (error) return <p>Error: {(error as Error).message}</p>;
+
 
   const filteredResources = allResources.filter(
     (r) =>
@@ -53,7 +61,8 @@ export default function DashboardHome() {
       {/* Welcome */}
       <div className="space-y-1">
         <h1 className="text-2xl font-bold flex gap-2 items-center">
-          Welcome back! <MdWavingHand className="text-kw-primary" />
+          Welcome {data?.firstName || ""}!{" "}
+          <MdWavingHand className="text-kw-primary" />
         </h1>
         <p className="text-muted-foreground">
           Here’s a quick overview of your resource activity.
@@ -65,6 +74,7 @@ export default function DashboardHome() {
         <Button
           size="lg"
           className="bg-kw-primary text-white dark:text-white dark:bg-kw-primary"
+          onClick={goToUploadResource}
         >
           <FaPlus /> Upload a Resource
         </Button>
@@ -120,12 +130,13 @@ export default function DashboardHome() {
             size="lg"
             variant="outline"
             className="border-kw-primary dark:border-white text-kw-primary dark:text-white"
+            onClick={goToResources}
           >
             Browse All Resources
           </Button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredResources.map((resource) => (
+          {filteredResources.slice(0, 4).map((resource) => (
             <ResourceCard
               key={resource.id}
               resource={resource}

@@ -9,7 +9,7 @@ const navItems = [
   { name: "Dashboard", path: "/dashboard", icon: <FaHome /> },
   { name: "Resources", path: "/dashboard/resources", icon: <FaFolderOpen /> },
   { name: "My Materials", path: "/dashboard/my-resources", icon: <FaBook /> },
-  { name: "Chat", path: "/dashboard/direct-message", icon: <FaMessage /> },
+  { name: "Chat", path: "/dashboard/chat", icon: <FaMessage /> },
 ];
 
 export default function Sidebar({
