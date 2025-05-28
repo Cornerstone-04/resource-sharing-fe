@@ -21,7 +21,7 @@ import ResourceDetailsContainer from "@/components/dashboard/resource-details-co
 import type { ResourceType } from "@/types";
 import { FaPlus } from "react-icons/fa6";
 import { useAppNavigate } from "@/hooks/navigation";
-// import {getDoc, collection} from "firebase/firestore"
+import { useUserData } from "@/hooks/useUserData";
 
 export default function DashboardHome() {
   const { goToUploadResource, goToResources } = useAppNavigate();
@@ -29,6 +29,11 @@ export default function DashboardHome() {
     null
   );
   const [searchQuery, setSearchQuery] = useState("");
+ const { data, error, isLoading } = useUserData();
+
+if (isLoading) return <p>Loading user data...</p>;
+if (error) return <p>Error: {(error as Error).message}</p>;
+
 
   const filteredResources = allResources.filter(
     (r) =>
@@ -56,7 +61,8 @@ export default function DashboardHome() {
       {/* Welcome */}
       <div className="space-y-1">
         <h1 className="text-2xl font-bold flex gap-2 items-center">
-          Welcome back! <MdWavingHand className="text-kw-primary" />
+          Welcome {data?.firstName || ""}!{" "}
+          <MdWavingHand className="text-kw-primary" />
         </h1>
         <p className="text-muted-foreground">
           Here’s a quick overview of your resource activity.

@@ -49,3 +49,11 @@ export type ChatMessage = {
   attachments: string;
   isRead: boolean;
 };
+
+export type UserData = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  studentEmail: string;
+  email: string;
+};

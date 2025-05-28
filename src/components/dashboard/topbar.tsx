@@ -8,9 +8,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "../shared/theme-toggle";
 import { useSidebar } from "@/store/useSidebar";
+import { useSignout } from "@/hooks/useSignout";
+import { useAppNavigate } from "@/hooks/navigation";
+import { useUserData } from "@/hooks/useUserData";
 
 export default function Topbar() {
   const { toggle } = useSidebar();
+  const { signoutUser } = useSignout();
+  const { goToHome } = useAppNavigate();
+  const { data, error } = useUserData();
+
+  if (error) return <p>Error: {(error as Error).message}</p>;
+
+  async function handleSignout(event: React.FormEvent) {
+    event.preventDefault();
+
+    await signoutUser();
+    goToHome();
+  }
 
   return (
     <header className="w-full sticky top-0 z-10 bg-white dark:bg-zinc-800 border-b dark:border-zinc-700 px-6 py-3 flex items-center justify-between shadow-sm">
@@ -41,7 +56,7 @@ export default function Topbar() {
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <span className="hidden md:inline text-sm font-medium">
-                Bright Walter
+                {data?.firstName || "User"} {data?.lastName || ""}
               </span>
               <ChevronDown className="h-4 w-4" />
             </button>
@@ -49,7 +64,7 @@ export default function Topbar() {
           <DropdownMenuContent align="end" className="w-40">
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

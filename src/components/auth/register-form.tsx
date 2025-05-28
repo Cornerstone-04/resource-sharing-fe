@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useRegister } from "@/hooks/useRegister";
 import { useAppNavigate } from "@/hooks/navigation";
 import { ThreeDotsLoader } from "../shared/three-dot-loader";
+import { toast } from "sonner";
 
 export const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -23,7 +24,7 @@ export const RegisterForm = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      return alert("Passwords do not match");
+      return toast.warning("Passwords do not match");
     }
 
     const finalEmail = hasStudentEmail ? studentEmail : email;
@@ -35,8 +36,10 @@ export const RegisterForm = () => {
       studentEmail: hasStudentEmail ? studentEmail : "",
     };
 
-    await registerUser(finalEmail, password, data);
-    goToDashboard();
+    const success = await registerUser(finalEmail, password, data);
+    if (success) {
+      goToDashboard();
+    }
   };
 
   return (
@@ -123,7 +126,7 @@ export const RegisterForm = () => {
         />
       </div>
 
-      <Button type="submit" className="w-full bg-kw-primary">
+      <Button type="submit" className="w-full text-white bg-kw-primary">
         {isLoading ? <ThreeDotsLoader /> : "Register"}
       </Button>
     </form>

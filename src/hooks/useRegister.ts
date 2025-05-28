@@ -5,25 +5,24 @@ import { FirebaseError } from "firebase/app";
 import { toast } from "sonner";
 import { useState } from "react";
 
-const user = auth.currentUser;
-
 type UserData = {
   firstName: string;
   lastName: string;
   phone: string;
   studentEmail: string;
 };
+
 export function useRegister() {
   const [isLoading, setIsLoading] = useState(false);
   async function registerUser(email: string, password: string, data: UserData) {
     try {
       setIsLoading(true);
       await createUserWithEmailAndPassword(auth, email, password);
-      console.log(user);
 
       await setDoc(doc(db, "users", email), { email, password, ...data });
 
       toast.success("Registration successful!");
+      return true;
     } catch (error) {
       if (error instanceof FirebaseError) {
         // Handle specific Firebase errors
@@ -40,6 +39,7 @@ export function useRegister() {
         }
       }
       console.error("Registration error:", error);
+      return false;
     } finally {
       setIsLoading(false);
     }
