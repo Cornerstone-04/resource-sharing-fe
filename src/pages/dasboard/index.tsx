@@ -20,8 +20,11 @@ import ResourceDetail from "@/components/dashboard/resource-detail";
 import ResourceDetailsContainer from "@/components/dashboard/resource-details-container";
 import type { ResourceType } from "@/types";
 import { FaPlus } from "react-icons/fa6";
+import { useNavigate } from "react-router";
+import { useAppNavigate } from "@/hooks/navigation";
 
 export default function DashboardHome() {
+  const { goToUploadResource } = useAppNavigate();
   const [selectedResource, setSelectedResource] = useState<ResourceType | null>(
     null
   );
@@ -32,6 +35,8 @@ export default function DashboardHome() {
       r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       r.courseCode.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-6 relative">
@@ -65,6 +70,7 @@ export default function DashboardHome() {
         <Button
           size="lg"
           className="bg-kw-primary text-white dark:text-white dark:bg-kw-primary"
+          onClick={goToUploadResource}
         >
           <FaPlus /> Upload a Resource
         </Button>
@@ -120,12 +126,13 @@ export default function DashboardHome() {
             size="lg"
             variant="outline"
             className="border-kw-primary dark:border-white text-kw-primary dark:text-white"
+            onClick={() => navigate("/dashboard/resources")}
           >
             Browse All Resources
           </Button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredResources.map((resource) => (
+          {filteredResources.slice(0, 4).map((resource) => (
             <ResourceCard
               key={resource.id}
               resource={resource}

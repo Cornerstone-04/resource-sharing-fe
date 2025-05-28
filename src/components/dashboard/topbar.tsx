@@ -13,7 +13,7 @@ export default function Topbar() {
   const { toggle } = useSidebar();
 
   return (
-    <header className="w-full bg-white dark:bg-zinc-800 border-b dark:border-zinc-700 px-6 py-3 flex items-center justify-between shadow-sm">
+    <header className="w-full sticky top-0 z-10 bg-white dark:bg-zinc-800 border-b dark:border-zinc-700 px-6 py-3 flex items-center justify-between shadow-sm">
       {/* Menu icon on mobile */}
       <button className="md:hidden" onClick={toggle} aria-label="Toggle Menu">
         <Menu className="w-6 h-6" />

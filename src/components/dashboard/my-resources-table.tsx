@@ -1,20 +1,7 @@
 import { Badge } from "@/components/ui/badge";
+import type { ResourceType } from "@/types";
 
-export default function MyResourcesTable({
-  data,
-}: {
-  data: {
-    id: number;
-    title: string;
-    courseCode: string;
-    author: string;
-    format: string;
-    borrowDate: string;
-    returnDate: string;
-    status: string;
-    image: string;
-  }[];
-}) {
+export default function MyResourcesTable({ data }: { data: ResourceType[] }) {
   return (
     <div className="bg-white dark:bg-zinc-800 rounded-xl border">
       <div className="grid grid-cols-7 gap-4 px-6 py-4 font-medium text-sm text-muted-foreground">

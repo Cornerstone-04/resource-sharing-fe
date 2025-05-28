@@ -16,6 +16,9 @@ export type ResourceType = {
     name: string;
     avatar: string;
   }[];
+  borrowDate?: string;
+  returnDate?: string;
+  status?: string;
 };
 
 export type Resource = {
@@ -29,4 +32,20 @@ export type Resource = {
   format: string;
   location: string;
   borrowers: { name: string; avatar: string }[];
+};
+
+// chat
+export type ChatUser = {
+  id: string;
+  name: string;
+  avatar: string;
+};
+
+export type ChatMessage = {
+  id: string;
+  senderId: string;
+  text: string;
+  timestamp: string;
+  attachments: string;
+  isRead: boolean;
 };
