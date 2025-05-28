@@ -23,7 +23,7 @@ export function Hero() {
         from fellow students — anytime, anywhere.
       </p>
       <Link to="/auth/register">
-        <Button size="lg" className="mt-6 px-8 py-5 text-base">
+        <Button size="lg" className="mt-6 px-8 py-5 text-base bg-kw-primary">
           Get Started
         </Button>
       </Link>
