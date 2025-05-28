@@ -6,7 +6,11 @@ export const ThemeToggle = () => {
   const { dark, toggle } = useTheme();
   return (
     <Button variant="ghost" onClick={toggle}>
-      {dark ? <LucideSun /> : <LucideMoon />}
+      {dark ? (
+        <LucideSun className="text-kw-primary" />
+      ) : (
+        <LucideMoon className="text-kw-primary" />
+      )}
     </Button>
   );
 };
