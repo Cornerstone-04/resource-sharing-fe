@@ -20,11 +20,11 @@ import ResourceDetail from "@/components/dashboard/resource-detail";
 import ResourceDetailsContainer from "@/components/dashboard/resource-details-container";
 import type { ResourceType } from "@/types";
 import { FaPlus } from "react-icons/fa6";
-import { useNavigate } from "react-router";
 import { useAppNavigate } from "@/hooks/navigation";
+// import {getDoc, collection} from "firebase/firestore"
 
 export default function DashboardHome() {
-  const { goToUploadResource } = useAppNavigate();
+  const { goToUploadResource, goToResources } = useAppNavigate();
   const [selectedResource, setSelectedResource] = useState<ResourceType | null>(
     null
   );
@@ -35,8 +35,6 @@ export default function DashboardHome() {
       r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       r.courseCode.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  const navigate = useNavigate();
 
   return (
     <div className="space-y-6 relative">
@@ -126,7 +124,7 @@ export default function DashboardHome() {
             size="lg"
             variant="outline"
             className="border-kw-primary dark:border-white text-kw-primary dark:text-white"
-            onClick={() => navigate("/dashboard/resources")}
+            onClick={goToResources}
           >
             Browse All Resources
           </Button>
