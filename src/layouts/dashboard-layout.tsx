@@ -1,19 +1,28 @@
+import { type ReactNode, useState } from "react";
+
+import { cn } from "@/lib/utils";
 import Sidebar from "@/components/dashboard/sidebar";
 import Topbar from "@/components/dashboard/topbar";
-import { Outlet } from "react-router";
 
-export default function DashboardLayout() {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-zinc-900 text-zinc-900 dark:text-white">
+    <div className="flex h-screen w-full overflow-hidden">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={() => setCollapsed(!collapsed)}
+      />
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col">
+      {/* Main Area */}
+      <div className="flex flex-col flex-1 overflow-y-auto">
+        {/* Topbar */}
         <Topbar />
 
-        <main className="flex-1 p-6">
-          <Outlet />
+        {/* Main content */}
+        <main className={cn("flex-1 p-6 bg-gray-50 dark:bg-zinc-900")}>
+          {children}
         </main>
       </div>
     </div>
