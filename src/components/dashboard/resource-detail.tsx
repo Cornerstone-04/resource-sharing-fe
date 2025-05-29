@@ -2,47 +2,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import RequestToBorrowButton from "../shared/request-button";
 import type { ResourceType } from "@/types";
+import SaveButton from "../shared/save-button";
 
 export default function ResourceDetail({
   resource,
+  allResources,
 }: {
   resource: ResourceType;
+  allResources?: ResourceType[];
 }) {
-  // Mock related resources (replace with filtered list later if needed)
-  const relatedResources: ResourceType[] = [
-    {
-      id: 11,
-      title: "Algorithms Unlocked",
-      courseCode: "CSC 202",
-      author: "Cormen",
-      available: true,
-      image: "/placeholder.svg",
-      description: "Understand the basics of algorithms",
-      owner: "Ibrahim",
-      format: "PDF",
-      location: "Library Shelf A",
-      type: "Softcopy",
-      level: "200",
-      department: "CSC",
-      borrowers: [],
-    },
-    {
-      id: 12,
-      title: "Computer Networks",
-      courseCode: "CSC 303",
-      author: "Tanenbaum",
-      available: false,
-      image: "/placeholder.svg",
-      description: "A modern approach to networks",
-      owner: "Chisom",
-      format: "Paperback",
-      location: "ICT Center",
-      type: "Hardcover",
-      level: "300",
-      department: "CSC",
-      borrowers: [],
-    },
-  ];
+  const relatedResources = allResources!
+    .filter(
+      (r) =>
+        r.id !== resource.id && // exclude current resource
+        r.department === resource.department &&
+        r.level === resource.level
+    )
+    .slice(0, 4); // Limit to 4
 
   return (
     <div className="px-4 md:px-6 py-6">
@@ -78,17 +54,31 @@ export default function ResourceDetail({
               <span className="font-semibold">Title:</span> {resource.title}
             </p>
             <p>
-              <span className="font-semibold">Owner:</span> {resource.owner}
+              <span className="font-semibold">Owner:</span>{" "}
+              {resource.owner || "Unknown"}
             </p>
+            {resource.type === "Hardcover" && resource.ownerPhone && (
+              <p>
+                <span className="font-semibold">Phone:</span>{" "}
+                {resource.ownerPhone}
+              </p>
+            )}
             <p>
               <span className="font-semibold">Author:</span> {resource.author}
             </p>
-            <p>
-              <span className="font-semibold">Format:</span> {resource.format}
-            </p>
+            {resource.type === "Hardcover" ? (
+              <p>
+                <span className="font-semibold">Type:</span> {resource?.type}
+              </p>
+            ) : (
+              <p>
+                <span className="font-semibold">Format:</span>{" "}
+                {resource?.format}
+              </p>
+            )}
             <p>
               <span className="font-semibold">Location:</span>{" "}
-              {resource.location}
+              {resource.meetup || resource.location || "N/A"}
             </p>
             <p>
               <span className="font-semibold">Department:</span>{" "}
@@ -99,23 +89,45 @@ export default function ResourceDetail({
             </p>
           </div>
 
-          <RequestToBorrowButton resource={resource} />
-
-          {resource.borrowers?.length > 0 && (
-            <div className="flex items-center gap-3 mt-4">
-              <div className="flex -space-x-2">
-                {resource.borrowers.map((borrower, i) => (
-                  <Avatar key={i} className="h-8 w-8 border-2 border-white">
-                    <AvatarImage src={borrower.avatar} />
-                    <AvatarFallback>{borrower.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                ))}
+          {resource.type === "Softcopy" && resource.fileUrl ? (
+            <div className="flex gap-3 flex-col sm:flex-row">
+              <a
+                href={resource.fileUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-block text-center bg-kw-primary hover:bg-blue-700 text-white py-2 rounded-md transition-all"
+              >
+                Download File
+              </a>
+              <div className="flex-1">
+                <SaveButton resource={resource} />
               </div>
-              <p className="text-sm text-zinc-500">
-                & {resource.borrowers.length} others have borrowed this
-              </p>
             </div>
+          ) : (
+            <RequestToBorrowButton resource={resource} />
           )}
+
+          {/* Only show borrowers for Hardcopy */}
+          {resource.type === "Hardcover" &&
+            resource.borrowers &&
+            resource.borrowers.length > 0 && (
+              <div className="flex items-center gap-3 mt-4">
+                <div className="flex -space-x-2">
+                  {resource.borrowers.map((borrower, i) => (
+                    <Avatar key={i} className="h-8 w-8 border-2 border-white">
+                      <AvatarImage src={borrower.avatar} />
+                      <AvatarFallback>{borrower.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                  ))}
+                </div>
+                <p className="text-sm text-zinc-500">
+                  & {resource.borrowers.length}{" "}
+                  {resource.borrowers.length > 1 ? "others" : "person"} have
+                  borrowed this
+                </p>
+              </div>
+            )}
         </div>
       </div>
 
@@ -129,7 +141,7 @@ export default function ResourceDetail({
               className="bg-white dark:bg-zinc-800 rounded-xl border p-4"
             >
               <img
-                src={rel.image}
+                src={rel.image || "/placeholder.svg"}
                 alt={rel.title}
                 className="rounded-lg mb-3 aspect-[3/4] object-cover w-full"
               />
@@ -145,7 +157,7 @@ export default function ResourceDetail({
                   {rel.available ? "Available" : "Unavailable"}
                 </Badge>
               </div>
-              <p className="text-xs text-zinc-500 mb-2">{rel.format}</p>
+
               <RequestToBorrowButton resource={rel} />
             </div>
           ))}

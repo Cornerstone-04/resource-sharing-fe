@@ -14,7 +14,7 @@ type ResourceFormData = {
   description?: string;
   type: "Softcopy" | "Hardcover";
   location?: string; // Only for Hardcover
-  meetup?: string; // Only for Hardcover
+  meetup?: string;   // Only for Hardcover
 };
 
 export function useUploadResource() {
@@ -26,18 +26,22 @@ export function useUploadResource() {
       const user = auth.currentUser;
       if (!user || !user.email) throw new Error("User not authenticated");
 
-      // Upload to Cloudinary instead of Firebase
-      const fileUrl = await uploadToCloudinary(file);
+      // Upload to Cloudinary
+      const uploadedUrl = await uploadToCloudinary(file);
 
-      // Save metadata in Firestore
-      await addDoc(collection(db, "resources"), {
+      // Determine correct field (fileUrl for softcopy, image for hardcover)
+      const resourceData = {
         ...formData,
-        fileUrl,
-        owner: user.email,
+        fileUrl: formData.type === "Softcopy" ? uploadedUrl : "",
+        image: formData.type === "Hardcover" ? uploadedUrl : "",
+        owner: user.displayName || user.email || "Unknown",
+        ownerPhone: user.phoneNumber || "Not Provided",
         borrowers: [],
         available: true,
         createdAt: Timestamp.now(),
-      });
+      };
+
+      await addDoc(collection(db, "resources"), resourceData);
 
       toast.success("Resource uploaded successfully!");
     } catch (error: unknown) {
@@ -50,5 +54,6 @@ export function useUploadResource() {
       setIsLoading(false);
     }
   }
+
   return { uploadResource, isLoading };
 }
