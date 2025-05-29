@@ -1,24 +1,28 @@
-export type ResourceType = {
-  id: number;
+export interface ResourceType {
+  id: string;
   title: string;
   courseCode: string;
-  author: string;
+  author?: string;
+  format?: string;
+  department: string;
+  level: string;
+  type: "Softcopy" | "Hardcover";
+  fileUrl?: string;
+  image?: string;
+  location?: string;
+  meetup?: string;
+  description?: string;
   available: boolean;
-  image: string;
-  description: string;
   owner: string;
-  format: string;
-  location: string;
-  type: string; // e.g., "Softcopy" or "Hardcover"
-  level: string; // e.g., "100", "200", etc.
-  department: string; // e.g., "CSC", "TCS", etc.
-  borrowers: {
-    name: string;
-    avatar: string;
-  }[];
-  borrowDate?: string;
-  returnDate?: string;
-  status?: string;
+  ownerPhone?: string;
+  borrowers: BorrowerType[];
+  createdAt: Date;
+}
+
+export type BorrowerType = {
+  name: string;
+  email: string;
+  avatar?: string;
 };
 
 export type Resource = {
