@@ -10,7 +10,7 @@ export function Header() {
           <Button variant="ghost">Login</Button>
         </Link>
         <Link to="/auth/register">
-          <Button className="bg-kw-primary">Register</Button>
+          <Button className="bg-kw-primary text-white">Register</Button>
         </Link>
       </div>
     </header>

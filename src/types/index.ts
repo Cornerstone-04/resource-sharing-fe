@@ -1,21 +1,34 @@
-export type ResourceType = {
-  id: number;
+import type { Timestamp } from "firebase/firestore";
+
+export interface ResourceType {
+  id: string;
   title: string;
   courseCode: string;
-  author: string;
+  author?: string;
+  format?: string;
+  department: string;
+  level: string;
+  type: "Softcopy" | "Hardcover";
+  fileUrl?: string;
+  image?: string;
+  location?: string;
+  meetup?: string;
+  description?: string;
   available: boolean;
-  image: string;
-  description: string;
   owner: string;
-  format: string;
-  location: string;
-  type: string; // e.g., "Softcopy" or "Hardcover"
-  level: string; // e.g., "100", "200", etc.
-  department: string; // e.g., "CSC", "TCS", etc.
-  borrowers: {
-    name: string;
-    avatar: string;
-  }[];
+  ownerPhone?: string;
+  borrowers: BorrowerType[];
+  createdAt: Date;
+  savers?: string[];
+}
+
+export type BorrowerType = {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  borrowDate: Timestamp;
+  returnDate: Timestamp;
 };
 
 export type Resource = {
@@ -29,4 +42,30 @@ export type Resource = {
   format: string;
   location: string;
   borrowers: { name: string; avatar: string }[];
+};
+
+// chat
+export type ChatUser = {
+  id: string;
+  name: string;
+  avatar: string;
+};
+
+export type ChatMessage = {
+  id: string;
+  senderId: string;
+  text: string;
+  timestamp: string;
+  attachments: string;
+  isRead: boolean;
+};
+
+export type UserData = {
+  uid: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  studentEmail: string;
+  email: string;
+  avatar?: string;
 };

@@ -3,11 +3,20 @@ import { Filter, Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { allResources } from "@/data/mock-data";
+import { useFilteredResources } from "@/hooks/useFilteredResources";
 import ResourceCard from "@/components/dashboard/resource-card";
 import ResourceDetail from "@/components/dashboard/resource-detail";
 import ResourceDetailsContainer from "@/components/dashboard/resource-details-container";
 import type { ResourceType } from "@/types";
+import { FaPlus } from "react-icons/fa6";
+import { useAppNavigate } from "@/hooks/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const departments = ["CSC", "TCS", "MAC", "IFT", "IS"];
 const levels = ["100", "200", "300", "400"];
@@ -17,6 +26,8 @@ const types = ["Softcopy", "Hardcover"];
 const PAGE_SIZE = 8;
 
 export default function ResourcesPage() {
+  const { data = [], isLoading } = useFilteredResources();
+  const { goToUploadResource } = useAppNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedResource, setSelectedResource] = useState<ResourceType | null>(
     null
@@ -34,7 +45,7 @@ export default function ResourcesPage() {
     setCurrentPage(1);
   };
 
-  const filtered = allResources.filter((r) => {
+  const filtered = data.filter((r) => {
     const matchesQuery =
       r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       r.courseCode.toLowerCase().includes(searchQuery.toLowerCase());
@@ -61,6 +72,28 @@ export default function ResourcesPage() {
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
+  if (isLoading) {
+    return (
+      <div className="p-6 text-center text-muted-foreground">
+        Loading resources...
+      </div>
+    );
+  }
+  if (data.length === 0) {
+    return (
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <h1>No resources found.</h1>
+
+        <Button
+          className="whitespace-nowrap bg-kw-primary text-white"
+          onClick={goToUploadResource}
+        >
+          <FaPlus /> Upload Resource
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 space-y-6">
       {/* Modal */}
@@ -74,7 +107,7 @@ export default function ResourcesPage() {
           >
             ✕
           </Button>
-          <ResourceDetail resource={selectedResource} />
+          <ResourceDetail resource={selectedResource} allResources={data} />
         </ResourceDetailsContainer>
       )}
 
@@ -94,85 +127,83 @@ export default function ResourcesPage() {
           <Filter className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
         </div>
 
-        <Button className="whitespace-nowrap">Upload Resource</Button>
+        <Button
+          className="whitespace-nowrap bg-kw-primary text-white"
+          onClick={goToUploadResource}
+        >
+          <FaPlus /> Upload Resource
+        </Button>
       </div>
 
       {/* Filters */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <select
-          className="p-2 rounded-md border"
+        <Select
           value={filters.department}
-          onChange={(e) => handleFilterChange("department", e.target.value)}
+          onValueChange={(value) => handleFilterChange("department", value)}
         >
-          <option value="">Department</option>
-          {departments.map((d) => (
-            <option key={d}>{d}</option>
-          ))}
-        </select>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Department" />
+          </SelectTrigger>
+          <SelectContent>
+            {departments.map((d) => (
+              <SelectItem key={d} value={d}>
+                {d}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <select
-          className="p-2 rounded-md border"
+        <Select
           value={filters.level}
-          onChange={(e) => handleFilterChange("level", e.target.value)}
+          onValueChange={(value) => handleFilterChange("level", value)}
         >
-          <option value="">Level</option>
-          {levels.map((l) => (
-            <option key={l}>{l}</option>
-          ))}
-        </select>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Level" />
+          </SelectTrigger>
+          <SelectContent>
+            {levels.map((l) => (
+              <SelectItem key={l} value={l}>
+                {l}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <select
-          className="p-2 rounded-md border"
+        <Select
           value={filters.format}
-          onChange={(e) => handleFilterChange("format", e.target.value)}
+          onValueChange={(value) => handleFilterChange("format", value)}
         >
-          <option value="">Format</option>
-          {formats.map((f) => (
-            <option key={f}>{f}</option>
-          ))}
-        </select>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Format" />
+          </SelectTrigger>
+          <SelectContent>
+            {formats.map((f) => (
+              <SelectItem key={f} value={f}>
+                {f}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <select
-          className="p-2 rounded-md border"
+        <Select
           value={filters.type}
-          onChange={(e) => handleFilterChange("type", e.target.value)}
+          onValueChange={(value) => handleFilterChange("type", value)}
         >
-          <option value="">Type</option>
-          {types.map((t) => (
-            <option key={t}>{t}</option>
-          ))}
-        </select>
-      </div>
-
-      {/* Resource Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {paginated.map((resource) => (
-          <ResourceCard
-            key={resource.id}
-            resource={resource}
-            onClick={() => {
-              const enriched: ResourceType = {
-                ...resource,
-                description: "Default description",
-                owner: "Unknown",
-                format: "PDF",
-                location: "Library A",
-                type: "Softcopy",
-                level: "400",
-                department: "CSC",
-                borrowers: [
-                  { name: "User A", avatar: "/placeholder.svg" },
-                  { name: "User B", avatar: "/placeholder.svg" },
-                ],
-              };
-              setSelectedResource(enriched);
-            }}
-          />
-        ))}
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Type" />
+          </SelectTrigger>
+          <SelectContent>
+            {types.map((t) => (
+              <SelectItem key={t} value={t}>
+                {t}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-4 mt-6">
+      <div className="flex justify-start items-center gap-4 mt-6">
         <Button
           size="sm"
           variant="outline"
@@ -194,6 +225,22 @@ export default function ResourcesPage() {
         >
           <ChevronRight className="w-4 h-4" />
         </Button>
+      </div>
+
+      {/* Resource Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {paginated.map((resource) => (
+          <ResourceCard
+            key={resource.id}
+            resource={resource}
+            onClick={() => {
+              const enriched: ResourceType = {
+                ...resource,
+              };
+              setSelectedResource(enriched);
+            }}
+          />
+        ))}
       </div>
     </div>
   );

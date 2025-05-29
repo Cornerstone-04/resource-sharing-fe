@@ -11,6 +11,9 @@ import VerifyEmailPage from "@/pages/auth/verify-email";
 import DashboardHome from "@/pages/dasboard";
 import DashboardLayoutWrapper from "@/layouts/dashboard-layout-wrapper";
 import ResourcesPage from "@/pages/dasboard/resources";
+import MyMaterialsPage from "@/pages/dasboard/my-materials";
+import ChatPage from "@/pages/dasboard/chat";
+import UploadPage from "@/pages/dasboard/upload";
 
 export const router = createBrowserRouter([
   {
@@ -37,7 +40,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardHome /> },
       { path: "resources", element: <ResourcesPage /> },
-      // { path: "my-materials", element: <MyMaterialsPage /> },
+      { path: "my-resources", element: <MyMaterialsPage /> },
+      { path: "chat", element: <ChatPage /> },
+      { path: "upload-resource", element: <UploadPage /> },
     ],
   },
   {

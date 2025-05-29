@@ -1,14 +1,9 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import type { ResourceType } from "@/types";
+import { Button } from "../ui/button";
 
 type ResourceCardProps = {
-  resource: {
-    id: number;
-    courseCode: string;
-    title: string;
-    image: string;
-    available: boolean;
-  };
+  resource: ResourceType;
   onClick?: () => void;
 };
 
@@ -35,56 +30,13 @@ export default function ResourceCard({ resource, onClick }: ResourceCardProps) {
           </Badge>
         </div>
 
-        <Badge
-          className="absolute top-2 left-2 bg-kw-primary opacity-80 hover:opacity-100 text-xs text-white hover:scale-105 transition-all ease-in-out cursor-pointer"
+        <Button
+          className="inline-block w-full text-center bg-kw-primary  hover:bg-blue-700 text-white py-2 rounded-md transition-all"
           onClick={onClick}
         >
-          View Details
-        </Badge>
-
-        <Button className="w-full bg-kw-primary text-white">Request</Button>
+          View Resource
+        </Button>
       </div>
     </div>
   );
 }
-
-// type ResourceCardProps = {
-//   resource: {
-//     id: number;
-//     courseCode: string;
-//     title: string;
-//     image: string;
-//     available: boolean;
-//   };
-//   onClick?: () => void;
-// };
-
-// export default function ResourceCard({ resource, onClick }: ResourceCardProps) {
-//   return (
-//     <div
-//       onClick={onClick}
-//       className="cursor-pointer bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow transition"
-//     >
-//       <div className="aspect-[3/4] bg-gray-100">
-//         <img
-//           src={resource.image}
-//           alt={resource.title}
-//           className="w-full h-full object-cover"
-//         />
-//       </div>
-//       <div className="p-4 space-y-1">
-//         <h3 className="font-semibold">{resource.courseCode}</h3>
-//         <p className="text-sm text-gray-600">{resource.title}</p>
-//         <span
-//           className={`text-xs font-medium px-2 py-1 inline-block rounded ${
-//             resource.available
-//               ? "bg-green-100 text-green-800"
-//               : "bg-red-100 text-red-800"
-//           }`}
-//         >
-//           {resource.available ? "Available" : "Unavailable"}
-//         </span>
-//       </div>
-//     </div>
-//   );
-// }
