@@ -1,3 +1,5 @@
+import type { Timestamp } from "firebase/firestore";
+
 export interface ResourceType {
   id: string;
   title: string;
@@ -17,12 +19,16 @@ export interface ResourceType {
   ownerPhone?: string;
   borrowers: BorrowerType[];
   createdAt: Date;
+  savers?: string[];
 }
 
 export type BorrowerType = {
+  id: string;
   name: string;
   email: string;
   avatar?: string;
+  borrowDate: Timestamp;
+  returnDate: Timestamp;
 };
 
 export type Resource = {
@@ -55,9 +61,11 @@ export type ChatMessage = {
 };
 
 export type UserData = {
+  uid: string;
   firstName: string;
   lastName: string;
   phone: string;
   studentEmail: string;
   email: string;
+  avatar?: string;
 };

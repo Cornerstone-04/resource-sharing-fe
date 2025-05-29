@@ -2,15 +2,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import RequestToBorrowButton from "../shared/request-button";
 import type { ResourceType } from "@/types";
+import SaveButton from "../shared/save-button";
 
 export default function ResourceDetail({
   resource,
   allResources,
 }: {
   resource: ResourceType;
-  allResources: ResourceType[];
+  allResources?: ResourceType[];
 }) {
-  const relatedResources = allResources
+  const relatedResources = allResources!
     .filter(
       (r) =>
         r.id !== resource.id && // exclude current resource
@@ -89,15 +90,20 @@ export default function ResourceDetail({
           </div>
 
           {resource.type === "Softcopy" && resource.fileUrl ? (
-            <a
-              href={resource.fileUrl}
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block w-full text-center bg-kw-primary hover:bg-blue-700 text-white py-2 rounded-md transition-all"
-            >
-              Download File
-            </a>
+            <div className="flex gap-3 flex-col sm:flex-row">
+              <a
+                href={resource.fileUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-block text-center bg-kw-primary hover:bg-blue-700 text-white py-2 rounded-md transition-all"
+              >
+                Download File
+              </a>
+              <div className="flex-1">
+                <SaveButton resource={resource} />
+              </div>
+            </div>
           ) : (
             <RequestToBorrowButton resource={resource} />
           )}

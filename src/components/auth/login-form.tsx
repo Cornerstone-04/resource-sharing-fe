@@ -48,7 +48,7 @@ export default function LoginForm() {
         />
       </div>
 
-      <Button className="w-full mt-4 bg-kw-primary">
+      <Button className="w-full mt-4 bg-kw-primary text-white">
         {isLoading ? <ThreeDotsLoader /> : "Login"}
       </Button>
     </form>
