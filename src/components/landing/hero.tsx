@@ -12,7 +12,6 @@ export function Hero() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Logo */}
       <motion.div
         className="w-32 md:w-40 mb-6"
         initial={{ opacity: 0, y: 20 }}
@@ -26,7 +25,6 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Heading */}
       <motion.h1
         className="text-3xl md:text-5xl font-bold max-w-3xl leading-tight tracking-tight"
         initial={{ opacity: 0, y: 20 }}
@@ -36,7 +34,6 @@ export function Hero() {
         Your go-to academic resource hub at Unilorin.
       </motion.h1>
 
-      {/* Subheading */}
       <motion.p
         className="mt-4 text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl"
         initial={{ opacity: 0, y: 10 }}
@@ -47,7 +44,6 @@ export function Hero() {
         from fellow students — anytime, anywhere.
       </motion.p>
 
-      {/* CTA Button */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

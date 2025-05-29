@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 export default function App() {
   return (
     <PageFade>
-      <Toaster position="top-right" />
+      <Toaster position="top-right" closeButton />
       <RouterProvider router={router} />
     </PageFade>
   );
