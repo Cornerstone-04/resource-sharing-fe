@@ -12,7 +12,7 @@ export function Hero() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <motion.div
+      {/* <motion.div
         className="w-32 md:w-40 mb-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ export function Hero() {
           alt="KaweHub Logo"
           className="w-full h-auto mx-auto"
         />
-      </motion.div>
+      </motion.div> */}
 
       <motion.h1
         className="text-3xl md:text-5xl font-bold max-w-3xl leading-tight tracking-tight"
