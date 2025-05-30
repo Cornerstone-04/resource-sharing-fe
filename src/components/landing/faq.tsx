@@ -4,10 +4,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import { FaCircleQuestion } from "react-icons/fa6";
 
-function FAQItems() {
+export function FAQItems() {
   const items = [
     {
       question: "Who can use the app?",
@@ -52,13 +53,114 @@ function FAQItems() {
 }
 
 export function FAQSection() {
+  const [openItem, setOpenItem] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: "Who can use KàwéHub?",
+      answer:
+        "Only verified students of the University of Ilorin can access full features. We verify your student status through your official university email and student ID to maintain a secure academic community.",
+    },
+    {
+      question: "What types of materials can I upload?",
+      answer:
+        "You can share any academic resource including lecture notes, past questions, assignments, project reports, and study guides. All content is moderated to ensure quality and relevance to our academic community.",
+    },
+    {
+      question: "How does the textbook borrowing system work?",
+      answer:
+        "Browse available textbooks, send a request to the owner, arrange pickup at a convenient campus location, and return within the agreed timeframe. Our system includes automated reminders and reputation tracking.",
+    },
+    {
+      question: "Is KàwéHub completely free to use?",
+      answer:
+        "Yes! KàwéHub is built by students, for students, and is completely free to use. We believe education should be accessible to everyone in our university community.",
+    },
+    {
+      question: "How do you ensure content quality?",
+      answer:
+        "Our community-driven moderation system includes user ratings, peer reviews, and verification from senior students. Low-quality content is automatically flagged and reviewed by our moderation team.",
+    },
+  ];
+
   return (
-    <section className="py-14 px-6 bg-white dark:bg-zinc-900">
-      <div className="max-w-3xl mx-auto">
-        <h3 className="text-3xl font-semibold mb-8 flex items-center gap-2 text-center justify-center">
-          <FaCircleQuestion /> Frequently Asked Questions
-        </h3>
-        <FAQItems />
+    <section id="faq" className="py-24 bg-white dark:bg-zinc-900">
+      <div className="max-w-4xl mx-auto px-6">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex items-center justify-center space-x-3 mb-6">
+            <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl text-white">
+              <FaCircleQuestion />
+            </div>
+            <h2 className="text-4xl font-bold text-zinc-900 dark:text-white">
+              Frequently Asked Questions
+            </h2>
+          </div>
+          <p className="text-xl text-zinc-600 dark:text-zinc-400">
+            Everything you need to know about KàwéHub
+          </p>
+        </motion.div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <motion.div
+              key={index}
+              className="bg-zinc-50 dark:bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <button
+                className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors duration-200"
+                onClick={() => setOpenItem(openItem === index ? null : index)}
+              >
+                <span className="text-lg font-semibold text-zinc-900 dark:text-white">
+                  {faq.question}
+                </span>
+                <motion.div
+                  animate={{ rotate: openItem === index ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-blue-600"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </motion.div>
+              </button>
+              <AnimatePresence>
+                {openItem === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="px-8 pb-6"
+                  >
+                    <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

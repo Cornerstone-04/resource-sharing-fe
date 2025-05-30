@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks";
+import { useTheme } from "@/hooks/useTheme";
 import { LucideMoon, LucideSun } from "lucide-react";
 import { Button } from "../ui/button";
 

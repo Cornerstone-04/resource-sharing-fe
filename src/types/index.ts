@@ -17,10 +17,27 @@ export interface ResourceType {
   available: boolean;
   owner: string;
   ownerPhone?: string;
+  ownerName?: string;
   borrowers: BorrowerType[];
-  createdAt: Date;
+  createdAt: Timestamp;
   savers?: string[];
 }
+
+export type UserData = {
+  uid: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  studentEmail: string;
+  email: string;
+  avatar?: string;
+};
+
+export type ChatUser = {
+  id: string;
+  name: string;
+  avatar: string;
+};
 
 export type BorrowerType = {
   id: string;
@@ -31,41 +48,26 @@ export type BorrowerType = {
   returnDate: Timestamp;
 };
 
-export type Resource = {
-  id: number;
-  title: string;
-  courseCode: string;
-  description: string;
-  image: string;
-  available: boolean;
-  owner: string;
-  format: string;
-  location: string;
-  borrowers: { name: string; avatar: string }[];
-};
-
-// chat
-export type ChatUser = {
+export type BorrowRequestType = {
   id: string;
-  name: string;
-  avatar: string;
-};
-
-export type ChatMessage = {
-  id: string;
-  senderId: string;
-  text: string;
-  timestamp: string;
-  attachments: string;
-  isRead: boolean;
-};
-
-export type UserData = {
-  uid: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  studentEmail: string;
-  email: string;
-  avatar?: string;
+  resourceId: string;
+  resourceTitle: string;
+  requesterId: string;
+  requesterName: string;
+  requesterEmail: string;
+  ownerId: string;
+  ownerName: string;
+  status: "pending" | "approved" | "declined" | "completed" | "cancelled";
+  message: string;
+  proposedDuration: number;
+  agreedDuration?: number | null;
+  expectedReturnDate?: Date | null;
+  pickupLocation?: string;
+  requestedAt: Timestamp; 
+  respondedAt?: Timestamp;
+  borrowedAt?: Timestamp;
+  returnedAt?: Timestamp;
+  chatRoomId?: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 };

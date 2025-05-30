@@ -14,6 +14,7 @@ import ResourcesPage from "@/pages/dasboard/resources";
 import MyMaterialsPage from "@/pages/dasboard/my-materials";
 import ChatPage from "@/pages/dasboard/chat";
 import UploadPage from "@/pages/dasboard/upload";
+import { AuthGuard, GuestGuard } from "./auth-guard";
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +24,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <AuthLayout />, // handles routes like login/register
+    element: (
+      <GuestGuard>
+        <AuthLayout />
+      </GuestGuard>
+    ),
     children: [
       { index: true, element: <LandingPage /> },
       { path: "login", element: <LoginPage /> },
@@ -35,7 +40,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayoutWrapper />, // authenticated layout
+    element: (
+      <AuthGuard>
+        <DashboardLayoutWrapper />
+      </AuthGuard>
+    ), // authenticated layout
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <DashboardHome /> },
