@@ -1,56 +1,64 @@
+import {
+  FaBookOpen,
+  FaCloudArrowUp,
+  FaShieldHalved,
+  FaSistrix,
+} from "react-icons/fa6";
+import { FeatureCard } from "./feature-card";
 import { motion } from "framer-motion";
-import type { ReactNode } from "react";
-import { FaBookOpen, FaCloudArrowUp, FaShieldHalved, FaSistrix } from "react-icons/fa6";
 
- function FeatureCard({
-  title,
-  desc,
-  icon,
-}: {
-  title: string;
-  desc: string;
-  icon: ReactNode;
-}) {
+export function Features() {
+  const features = [
+    {
+      icon: <FaCloudArrowUp />,
+      title: "Upload & Share",
+      desc: "Seamlessly share your notes, past questions, and study materials with the community. Help others succeed while building your academic reputation.",
+    },
+    {
+      icon: <FaBookOpen />,
+      title: "Borrow Textbooks",
+      desc: "Request physical textbooks from fellow students in your department. Easy pickup and return system with built-in reminders.",
+    },
+    {
+      icon: <FaShieldHalved />,
+      title: "Student Verified",
+      desc: "Secure platform exclusively for verified Unilorin students. Your academic integrity and privacy are our top priorities.",
+    },
+    {
+      icon: <FaSistrix />,
+      title: "Smart Search",
+      desc: "Find exactly what you need with our AI-powered search. Filter by course, department, semester, and content type instantly.",
+    },
+  ];
+
   return (
-    <motion.div
-      className="flex flex-col items-center text-center space-y-2 px-4"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
+    <section
+      id="features"
+      className="py-24 bg-gradient-to-br from-zinc-50 to-blue-50/30 dark:from-zinc-900 dark:to-blue-900/10"
     >
-      <div className="text-4xl text-blue-500 mb-2">{icon}</div>
-      <h4 className="text-lg font-semibold">{title}</h4>
-      <p className="text-sm text-zinc-600 dark:text-zinc-400">{desc}</p>
-    </motion.div>
-  );
-}
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Everything you need to excel
+          </h2>
+          <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+            Powerful tools designed specifically for Unilorin students to
+            enhance your academic journey
+          </p>
+        </motion.div>
 
-export function Features (){
-    return (
-        <section className="py-16 bg-zinc-50 dark:bg-zinc-800 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <FeatureCard
-            icon={<FaCloudArrowUp />}
-            title="Upload & Share"
-            desc="Help others by sharing useful resources."
-          />
-          <FeatureCard
-            icon={<FaBookOpen />}
-            title="Borrow Textbooks"
-            desc="Request and return physical materials easily."
-          />
-          <FeatureCard
-            icon={<FaShieldHalved />}
-            title="Student Verified"
-            desc="Only verified Unilorin students can access content."
-          />
-          <FeatureCard
-            icon={<FaSistrix />}
-            title="Quick Filters"
-            desc="Find materials fast using course-based filters."
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <FeatureCard key={index} {...feature} delay={index * 0.1} />
+          ))}
         </div>
-      </section>
-    )
+      </div>
+    </section>
+  );
 }

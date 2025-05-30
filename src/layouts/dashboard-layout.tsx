@@ -9,18 +9,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      {/* Sidebar */}
       <Sidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed(!collapsed)}
       />
-
-      {/* Main Area */}
       <div className="flex flex-col flex-1 overflow-y-auto">
-        {/* Topbar */}
         <Topbar />
-
-        {/* Main content */}
         <main className={cn("flex-1 p-6 bg-gray-50 dark:bg-zinc-900")}>
           {children}
         </main>
