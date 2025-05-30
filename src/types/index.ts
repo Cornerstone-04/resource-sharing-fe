@@ -17,7 +17,7 @@ export interface ResourceType {
   available: boolean;
   owner: string;
   ownerPhone?: string;
-  ownerName: string;
+  ownerName?: string;
   borrowers: BorrowerType[];
   createdAt: Timestamp;
   savers?: string[];
