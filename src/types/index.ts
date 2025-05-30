@@ -33,6 +33,12 @@ export type UserData = {
   avatar?: string;
 };
 
+export type ChatUser = {
+  id: string;
+  name: string;
+  avatar: string;
+};
+
 export type BorrowerType = {
   id: string;
   name: string;
