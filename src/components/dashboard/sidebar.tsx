@@ -41,7 +41,7 @@ export default function Sidebar({
       >
         {/* Logo & Toggle */}
         <div className="flex items-center justify-between p-4 dark:border-zinc-700">
-          {!collapsed && <span className="text-xl font-bold">KàwéHub</span>}
+          {!collapsed && <span className="text-xl font-bold">PeerShelf</span>}
           <button
             className="text-muted-foreground hover:text-primary transition"
             onClick={onToggle}

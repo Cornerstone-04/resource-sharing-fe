@@ -31,10 +31,10 @@ export function Header() {
           transition={{ type: "spring", stiffness: 400 }}
         >
           <div className="w-8 h-8 bg-gradient-to-br from-kw-primary to-indigo-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">K</span>
+            <span className="text-white font-bold text-sm">PS</span>
           </div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-kw-primary to-indigo-600 bg-clip-text text-transparent">
-            KàwéHub
+            PeerShelf
           </h1>
         </motion.div>
 

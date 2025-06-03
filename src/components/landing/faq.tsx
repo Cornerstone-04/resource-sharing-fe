@@ -57,7 +57,7 @@ export function FAQSection() {
 
   const faqs = [
     {
-      question: "Who can use KàwéHub?",
+      question: "Who can use PeerShelf?",
       answer:
         "Only verified students of the University of Ilorin can access full features. We verify your student status through your official university email and student ID to maintain a secure academic community.",
     },
@@ -72,9 +72,9 @@ export function FAQSection() {
         "Browse available textbooks, send a request to the owner, arrange pickup at a convenient campus location, and return within the agreed timeframe. Our system includes automated reminders and reputation tracking.",
     },
     {
-      question: "Is KàwéHub completely free to use?",
+      question: "Is PeerShelf completely free to use?",
       answer:
-        "Yes! KàwéHub is built by students, for students, and is completely free to use. We believe education should be accessible to everyone in our university community.",
+        "Yes! PeerShelf is built by students, for students, and is completely free to use. We believe education should be accessible to everyone in our university community.",
     },
     {
       question: "How do you ensure content quality?",
@@ -102,7 +102,7 @@ export function FAQSection() {
             </h2>
           </div>
           <p className="text-xl text-zinc-600 dark:text-zinc-400">
-            Everything you need to know about KàwéHub
+            Everything you need to know about PeerShelf
           </p>
         </motion.div>
 

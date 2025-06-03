@@ -14,9 +14,9 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">K</span>
+                <span className="text-white font-bold text-sm">PS</span>
               </div>
-              <h3 className="text-xl font-bold">KàwéHub</h3>
+              <h3 className="text-xl font-bold">PeerShelf</h3>
             </div>
             <p className="text-zinc-400">
               Empowering Unilorin students through collaborative learning and
@@ -27,7 +27,7 @@ export function Footer() {
 
         <div className="border-t border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-zinc-400 text-sm">
-            © {new Date().getFullYear()} KàwéHub. Built Group I.
+            © {new Date().getFullYear()} PeerShelf. Built Group I.
           </p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <span className="text-zinc-400 text-sm">Made in Nigeria 🇳🇬</span>
