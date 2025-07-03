@@ -57,7 +57,12 @@ export default function MyMaterialsPage() {
                 <ResourceCard
                   key={resource.id}
                   resource={resource}
-                  onClick={() => setSelectedResource(resource)}
+                  onClick={() => {
+                    const enriched: ResourceType = {
+                      ...resource,
+                    };
+                    setSelectedResource(enriched);
+                  }}
                 />
               ))}
             </div>
@@ -78,7 +83,12 @@ export default function MyMaterialsPage() {
                 <ResourceCard
                   key={resource.id}
                   resource={resource}
-                  onClick={() => setSelectedResource(resource)}
+                  onClick={() => {
+                    const enriched: ResourceType = {
+                      ...resource,
+                    };
+                    setSelectedResource(enriched);
+                  }}
                 />
               ))}
             </div>

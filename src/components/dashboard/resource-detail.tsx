@@ -11,14 +11,15 @@ export default function ResourceDetail({
   resource: ResourceType;
   allResources?: ResourceType[];
 }) {
-  const relatedResources = allResources!
-    .filter(
-      (r) =>
-        r.id !== resource.id && // exclude current resource
-        r.department === resource.department &&
-        r.level === resource.level
-    )
-    .slice(0, 4); // Limit to 4
+  const relatedResources =
+    allResources
+      ?.filter(
+        (r) =>
+          r.id !== resource.id &&
+          r.department === resource.department &&
+          r.level === resource.level
+      )
+      .slice(0, 4) || [];
 
   return (
     <div className="px-4 md:px-6 py-6">
@@ -135,32 +136,34 @@ export default function ResourceDetail({
       <div>
         <h2 className="text-lg font-semibold mb-4">Related Resources</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {relatedResources.map((rel) => (
-            <div
-              key={rel.id}
-              className="bg-white dark:bg-zinc-800 rounded-xl border p-4"
-            >
-              <img
-                src={rel.image || "/placeholder.svg"}
-                alt={rel.title}
-                className="rounded-lg mb-3 aspect-[3/4] object-cover w-full"
-              />
-              <div className="flex items-center justify-between text-sm mb-1">
-                <span className="font-semibold">{rel.courseCode}</span>
-                <Badge
-                  className={
-                    rel.available
-                      ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-700"
-                  }
+          {relatedResources.length > 0
+            ? relatedResources.map((rel) => (
+                <div
+                  key={rel.id}
+                  className="bg-white dark:bg-zinc-800 rounded-xl border p-4"
                 >
-                  {rel.available ? "Available" : "Unavailable"}
-                </Badge>
-              </div>
+                  <img
+                    src={rel.image || "/placeholder.svg"}
+                    alt={rel.title}
+                    className="rounded-lg mb-3 aspect-[3/4] object-cover w-full"
+                  />
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="font-semibold">{rel.courseCode}</span>
+                    <Badge
+                      className={
+                        rel.available
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-700"
+                      }
+                    >
+                      {rel.available ? "Available" : "Unavailable"}
+                    </Badge>
+                  </div>
 
-              <RequestToBorrowButton resource={rel} />
-            </div>
-          ))}
+                  <RequestToBorrowButton resource={rel} />
+                </div>
+              ))
+            : "No related resources"}
         </div>
       </div>
     </div>
