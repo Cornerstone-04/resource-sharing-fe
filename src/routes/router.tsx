@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import LandingPage from "@/pages/landing";
 import RegisterPage from "@/pages/auth/register";
 import ErrorPage from "@/pages/error/error-page";
@@ -21,7 +21,11 @@ import ProfilePage from "@/pages/dasboard/profile";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: (
+      <GuestGuard>
+        <LandingPage />
+      </GuestGuard>
+    ),
     errorElement: <ErrorPage />,
   },
   {
@@ -32,7 +36,7 @@ export const router = createBrowserRouter([
       </GuestGuard>
     ),
     children: [
-      { index: true, element: <LandingPage /> },
+      { index: true, element: <Navigate to="/auth/login" replace /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
       { path: "verify-email", element: <VerifyEmailPage /> },
@@ -47,7 +51,7 @@ export const router = createBrowserRouter([
       <AuthGuard>
         <DashboardLayoutWrapper />
       </AuthGuard>
-    ), // authenticated layout
+    ),
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <DashboardHome /> },
@@ -60,6 +64,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <NotFoundPage />, // 404 fallback
+    element: <NotFoundPage />,
   },
 ]);

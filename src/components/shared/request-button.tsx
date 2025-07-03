@@ -37,7 +37,9 @@ export default function RequestToBorrowButton({ resource }: Props) {
       });
 
       setRequested(true);
-      toast.success(`Request sent to borrow "${resource.title}"`);
+      toast.success(
+        `Request sent to borrow "${resource.title}! We're still finalizing the borrowing feature, and it will be available very soon."`
+      );
     } catch (error) {
       console.error("Failed to request borrow:", error);
       toast.error("Failed to send borrow request.");
