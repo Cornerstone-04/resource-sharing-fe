@@ -15,6 +15,8 @@ import MyMaterialsPage from "@/pages/dasboard/my-materials";
 import ChatPage from "@/pages/dasboard/chat";
 import UploadPage from "@/pages/dasboard/upload";
 import { AuthGuard, GuestGuard } from "./auth-guard";
+import ResetPasswordPage from "@/pages/auth/reset-password";
+import ProfilePage from "@/pages/dasboard/profile";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,7 @@ export const router = createBrowserRouter([
       { path: "verify-email", element: <VerifyEmailPage /> },
       { path: "verify-docs", element: <VerifyDocsPage /> },
       { path: "verify-success", element: <VerifySuccessPage /> },
+      { path: "reset-password", element: <ResetPasswordPage /> },
     ],
   },
   {
@@ -52,6 +55,7 @@ export const router = createBrowserRouter([
       { path: "my-resources", element: <MyMaterialsPage /> },
       { path: "chat", element: <ChatPage /> },
       { path: "upload-resource", element: <UploadPage /> },
+      { path: "profile", element: <ProfilePage /> },
     ],
   },
   {

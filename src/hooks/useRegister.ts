@@ -10,6 +10,7 @@ type UserData = {
   lastName: string;
   phone: string;
   studentEmail: string;
+  avatarUrl?: ""
 };
 
 export function useRegister() {

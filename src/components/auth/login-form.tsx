@@ -7,6 +7,7 @@ import { useAppNavigate } from "@/hooks/navigation";
 import { ThreeDotsLoader } from "../shared/three-dot-loader";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
+import { Link } from "react-router";
 
 type FieldErrors = {
   email?: string;
@@ -73,6 +74,22 @@ export default function LoginForm() {
         {fieldErrors.password && (
           <p className="text-sm text-red-500">{fieldErrors.password}</p>
         )}
+        <div className="text-right">
+          <Link
+            to="/auth/reset-password"
+            className="text-sm text-kw-primary hover:underline disabled:opacity-50"
+          >
+            Forgot Password?
+          </Link>
+          {/* <button
+            type="button"
+            onClick={() => sendResetEmail(email)}
+            disabled={isResetting}
+            className="text-sm text-kw-primary hover:underline disabled:opacity-50"
+          >
+            {isResetting ? "Sending..." : "Forgot password?"}
+          </button> */}
+        </div>
       </div>
 
       <Button type="submit" className="w-full mt-4 bg-kw-primary text-white">

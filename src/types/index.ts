@@ -30,7 +30,7 @@ export type UserData = {
   phone: string;
   studentEmail: string;
   email: string;
-  avatar?: string;
+  avatarUrl?: string;
 };
 
 export type ChatUser = {

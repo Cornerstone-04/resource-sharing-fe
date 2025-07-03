@@ -16,5 +16,6 @@ export const useAppNavigate = () => {
     goToVerifyDocs: () => navigate("/auth/verify-docs"),
     goToVerifySuccess: () => navigate("/auth/verify-success"),
     goToUploadResource: () => navigate("/dashboard/upload-resource"),
+    goToProfile: () => navigate("/dashboard/profile"),
   };
 };

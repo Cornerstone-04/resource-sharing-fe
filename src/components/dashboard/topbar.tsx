@@ -15,7 +15,7 @@ import { useUserData } from "@/hooks/useUserData";
 export default function Topbar() {
   const { toggle } = useSidebar();
   const { signoutUser } = useSignout();
-  const { goToHome } = useAppNavigate();
+  const { goToHome, goToProfile } = useAppNavigate();
   const { data, error } = useUserData();
 
   if (error) return <p>Error: {(error as Error).message}</p>;
@@ -52,7 +52,7 @@ export default function Topbar() {
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 text-sm focus:outline-none hover:opacity-90">
               <Avatar className="h-8 w-8">
-                <AvatarImage src="https://api.dicebear.com/7.x/initials/svg?seed=User" />
+                <AvatarImage src={data?.avatarUrl || "https://api.dicebear.com/7.x/initials/svg?seed=User"} />
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <span className="hidden md:inline text-sm font-medium">
@@ -62,7 +62,9 @@ export default function Topbar() {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => goToProfile()}>
+              Profile
+            </DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem onClick={handleSignout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
